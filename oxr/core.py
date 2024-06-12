@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from oxr import responses, exceptions, _exceptions
-from typing import Any, Final, Iterable, Literal, TypeAlias, cast
 import datetime as dt
-import requests
+from typing import Any, Final, Iterable, Literal, cast
 
+import requests
+from typing_extensions import TypeAlias
+
+from oxr import _exceptions, exceptions, responses
 
 _Endpoint: TypeAlias = Literal[
     "latest",
@@ -28,7 +30,7 @@ class Client:
         base: responses.Currency = "USD",
         base_url: str = _BASE_URL,
     ) -> None:
-        self.app_id = app_id
+        self._app_id = app_id
         self._base = base
         self._base_url = base_url
 
@@ -39,7 +41,7 @@ class Client:
     ) -> dict[str, Any]:
         """Make a GET request to the API."""
         url = f"{self._base_url}/{endpoint}.json"
-        response = requests.get(url, params={**params, "app_id": self.app_id})
+        response = requests.get(url, params={**params, "app_id": self._app_id})
         try:
             response.raise_for_status()
         except requests.HTTPError as error:
@@ -91,7 +93,6 @@ class Client:
             "date": date.isoformat(),
             "show_alternative": show_alternative,
         }
-
         if symbols is not None:
             params["symbols"] = ",".join(symbols)
         return cast(responses.Rates, self._get("historical", params))

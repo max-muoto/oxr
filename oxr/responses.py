@@ -1,5 +1,8 @@
-from typing import Literal, TypeAlias, TypedDict
+from __future__ import annotations
 
+from typing import Literal, TypedDict
+
+from typing_extensions import TypeAlias
 
 # fmt: off
 Currency: TypeAlias =  Literal[

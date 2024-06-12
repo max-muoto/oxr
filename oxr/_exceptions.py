@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 from typing import Final
-from openexchangerates.exceptions import (
+
+from oxr.exceptions import (
     Error,
     InvalidAppID,
     InvalidCurrency,

@@ -37,4 +37,3 @@ olhc = client.olhc(start_time=dt.datetime(2020, 1, 1), period="1m", symbols=['EU
 
 MIT
 
-
