@@ -10,6 +10,7 @@ include = ["oxr/py.typed"]
 [tool.poetry.dependencies]
 python = "^3.8"
 typing-extensions = "^4.12.2"
+requests = "^2.32.3"
 
 [tool.poetry.group.dev.dependencies]
 pyright = "^1.1.364"
