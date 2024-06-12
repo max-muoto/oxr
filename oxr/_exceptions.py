@@ -10,7 +10,7 @@ from oxr.exceptions import (
     InvalidDateRange,
 )
 
-_EXCEPTION_MAP: Final[dict[tuple[int, str], type[Error]]] = {
+_EXCEPTION_MAPPING: Final[dict[tuple[int, str], type[Error]]] = {
     (401, "invalid_app_id"): InvalidAppID,
     (400, "invalid_currency"): InvalidCurrency,
     (400, "invalid_date"): InvalidDate,
@@ -20,4 +20,4 @@ _EXCEPTION_MAP: Final[dict[tuple[int, str], type[Error]]] = {
 
 def get(code: int, message: str) -> type[Error] | None:
     """Get the error class for the given code and message."""
-    return _EXCEPTION_MAP.get((code, message), None)
+    return _EXCEPTION_MAPPING.get((code, message), None)
