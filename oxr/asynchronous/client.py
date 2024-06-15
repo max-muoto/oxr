@@ -70,15 +70,6 @@ class Client(BaseClient):
         symbols: Iterable[Currency] | None = None,
         show_alternative: bool = False,
     ) -> responses.Rates:
-        """Get historical exchange rates.
-
-        Args:
-            date: The date of the rates.
-            base: The base currency.
-            symbols: The target currencies.
-            show_alternative: Whether to show alternative currencies.
-                Such as black market and digital currency rates.
-        """
         params = {
             "base": base or self._base,
             "show_alternative": show_alternative,
@@ -95,14 +86,6 @@ class Client(BaseClient):
         from_: str,
         to: str,
     ) -> responses.Conversion:
-        """Convert an amount between two currencies.
-
-        Args:
-            amount: The amount to convert.
-            from_: The source currency.
-            to: The target currency.
-            date: The date of the rates to use.
-        """
         params = {"from": from_, "to": to, "amount": amount}
         return cast(responses.Conversion, await self._get("convert", params))
 
@@ -114,16 +97,6 @@ class Client(BaseClient):
         base: str | None = None,
         show_alternative: bool = False,
     ) -> responses.TimeSeries:
-        """Get historical exchange rates for a range of dates.
-
-        Args:
-            start: The start date of the range.
-            end: The end date of the range.
-            symbols: The target currencies.
-            base: The base currency.
-            show_alternative: Whether to show alternative currencies.
-                Such as black market and digital currency rates.
-        """
         params = {
             "start": start.isoformat(),
             "end": end.isoformat(),
@@ -142,14 +115,6 @@ class Client(BaseClient):
         symbols: Iterable[Currency] | None = None,
         show_alternative: bool = False,
     ) -> responses.OHLC:
-        """Get the latest open, low, high, and close rates for a currency.
-
-        Args:
-            base: The base currency.
-            symbols: The target currencies.
-            show_alternative: Whether to show alternative currencies.
-                Such as black market and digital currency rates.
-        """
         params = {
             "start_time": start_time.isoformat(),
             "period": period,
