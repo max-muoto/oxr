@@ -9,8 +9,15 @@
 pip install oxr
 ```
 
+If you want to use the asynchronous client, you can install the package with the following command:
+
+```bash
+pip install oxr[async]
+```
 
 ## Usage
+
+### Synchronous Client
 
 ```python
 import oxr
@@ -31,6 +38,31 @@ timeseries = client.timeseries(start_date=dt.date(2020, 1, 1), end_date=dt.date(
 
 # Get open, high, low, close data
 ohlc = client.ohlc(start_time=dt.datetime(2020, 1, 1), period="1m", symbols=['EUR', 'JPY'])
+```
+
+### Asynchronous Client
+
+The asynchronous client is built on top of `aiohttp`, and can be used in an `async` context.
+
+```python
+import oxr.asynchronous
+import asyncio
+import datetime as dt
+
+async def main():
+    with oxr.asynchronous.Client(app_id='your_app_id') as client:        
+        # Fetch the latest exchange rates asynchronously
+        rates = await client.latest(symbols=['EUR', 'JPY'])
+
+        # Asynchronously convert 100 USD to EUR
+        converted = await client.convert(100, 'USD', 'EUR')
+
+        # Get time series data asynchronously
+        timeseries = await client.timeseries(start_date=dt.date(2020, 1, 1), end_date=dt.date(2020, 1, 31), symbols=['EUR', 'JPY'])
+
+        # Get OHLC data asynchronously
+        ohlc = await client.ohlc(start_time=dt.datetime(2020, 1, 1), period="1m", symbols=['EUR', 'JPY'])
+
 ```
 
 ## License
