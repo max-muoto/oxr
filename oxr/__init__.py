@@ -26,6 +26,6 @@ conversion = client.convert("USD", "EUR", 100)
 
 from __future__ import annotations
 
-from oxr.core import Client
+from oxr.client import Client
 
 __all__ = ["Client"]

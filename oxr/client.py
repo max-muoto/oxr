@@ -1,42 +1,21 @@
 from __future__ import annotations
 
 import datetime as dt
-from typing import Any, Final, Iterable, Literal, cast
+from typing import Any, Iterable, cast
 
 import requests
-from typing_extensions import TypeAlias
 
 from oxr import _exceptions, exceptions, responses
-
-_Endpoint: TypeAlias = Literal[
-    "latest",
-    "historical",
-    "convert",
-    "time-series",
-    "ohlc",
-    "usage",
-]
-
-_BASE_URL: Final = "https://openexchangerates.org/api"
+from oxr._base import BaseClient
+from oxr._types import Currency, Endpoint, Period
 
 
-class Client:
+class Client(BaseClient):
     """A client for the Open Exchange Rates API."""
-
-    def __init__(
-        self,
-        app_id: str,
-        *,
-        base: responses.Currency = "USD",
-        base_url: str = _BASE_URL,
-    ) -> None:
-        self._app_id = app_id
-        self._base = base
-        self._base_url = base_url
 
     def _get(
         self,
-        endpoint: _Endpoint,
+        endpoint: Endpoint,
         params: dict[str, Any],
     ) -> dict[str, Any]:
         """Make a GET request to the API."""
@@ -56,7 +35,7 @@ class Client:
     def latest(
         self,
         base: str | None = None,
-        symbols: Iterable[responses.Currency] | None = None,
+        symbols: Iterable[Currency] | None = None,
         show_alternative: bool = False,
     ) -> responses.Rates:
         """Get the latest exchange rates.
@@ -76,7 +55,7 @@ class Client:
         self,
         date: dt.date,
         base: str | None = None,
-        symbols: Iterable[responses.Currency] | None = None,
+        symbols: Iterable[Currency] | None = None,
         show_alternative: bool = False,
     ) -> responses.Rates:
         """Get historical exchange rates.
@@ -118,7 +97,7 @@ class Client:
         self,
         start: dt.date,
         end: dt.date,
-        symbols: Iterable[responses.Currency] | None = None,
+        symbols: Iterable[Currency] | None = None,
         base: str | None = None,
         show_alternative: bool = False,
     ) -> responses.TimeSeries:
@@ -145,9 +124,9 @@ class Client:
     def olhc(
         self,
         start_time: dt.datetime,
-        period: Literal["1m", "5m", "15m", "30m", "1h", "12", "1d", "1w", "1mo"],
+        period: Period,
         base: str | None = None,
-        symbols: Iterable[responses.Currency] | None = None,
+        symbols: Iterable[Currency] | None = None,
         show_alternative: bool = False,
     ) -> responses.OHLC:
         """Get the latest open, low, high, and close rates for a currency.
