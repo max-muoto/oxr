@@ -19,6 +19,8 @@ pytest = "^8.2.1"
 responses = "^0.25.3"
 aioresponses = "^0.7.6"
 pytest-asyncio = "^0.23.7"
+python-dotenv = "^1.0.1"
+ipdb = "^0.13.13"
 
 [tool.poetry.group.async.dependencies]
 aiohttp = "^3.9.5"

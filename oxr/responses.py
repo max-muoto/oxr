@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import TypedDict
 
+from typing_extensions import TypeAlias
+
 from oxr._types import Currency
 
 
@@ -58,9 +60,12 @@ class _OHLCRates(TypedDict):
 
 
 class OHLC(_Base):
-    """The response for the ohlc endpoint."""
+    """The response for the olhc endpoint."""
 
     start_time: str
     end_time: str
     base: Currency
     rates: dict[Currency, _OHLCRates]
+
+
+Currencies: TypeAlias = "dict[Currency, str]"

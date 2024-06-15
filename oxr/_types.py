@@ -30,6 +30,7 @@ Currency: TypeAlias =  Literal[
 Endpoint: TypeAlias = Literal[
     "latest",
     "historical",
+    "currencies",
     "convert",
     "time-series",
     "ohlc",

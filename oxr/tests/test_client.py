@@ -48,7 +48,7 @@ def test_historical(client: oxr.Client) -> None:
         **_BASE_RESPONSE,
     }
     responses.get(
-        "https://openexchangerates.org/api/historical.json",
+        "https://openexchangerates.org/api/historical/2021-01-01.json",
         json=resp,
         match=[
             matchers.query_param_matcher(
@@ -57,7 +57,6 @@ def test_historical(client: oxr.Client) -> None:
                     "base": "USD",
                     "show_alternative": False,
                     "symbols": "EUR,JPY",
-                    "date": "2021-01-01",
                 }
             )
         ],

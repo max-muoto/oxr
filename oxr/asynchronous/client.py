@@ -22,13 +22,23 @@ def _encode_params(params: dict[str, Any]) -> dict[str, Any]:
 class Client(BaseClient):
     """A asynchronous client for the Open Exchange Rates API."""
 
-    async def _get(self, endpoint: Endpoint, params: dict[str, Any]) -> dict[str, Any]:
-        url = f"{self._base_url}/{endpoint}.json"
+    async def _get(
+        self,
+        endpoint: Endpoint,
+        query_params: dict[str, Any],
+        path_params: list[str] | None = None,
+    ) -> dict[str, Any]:
+        url = self._prepare_url(endpoint, path_params)
         async with aiohttp.ClientSession() as session, session.get(
-            url, params=_encode_params({**params, "app_id": self._app_id})
+            url,
+            params=_encode_params({"app_id": self._app_id, **query_params}),
         ) as response:
             response.raise_for_status()
             return await response.json()
+
+    async def currencies(self) -> responses.Currencies:
+        """Get a list of available currencies."""
+        return cast(responses.Currencies, await self._get("currencies", {}))
 
     async def latest(
         self,
@@ -71,12 +81,13 @@ class Client(BaseClient):
         """
         params = {
             "base": base or self._base,
-            "date": date.isoformat(),
             "show_alternative": show_alternative,
         }
         if symbols is not None:
             params["symbols"] = ",".join(symbols)
-        return cast(responses.Rates, await self._get("historical", params))
+        return cast(
+            responses.Rates, await self._get("historical", params, path_params=[date.isoformat()])
+        )
 
     async def convert(
         self,

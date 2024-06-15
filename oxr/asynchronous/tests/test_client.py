@@ -51,11 +51,10 @@ async def test_historical(client: oxr.asynchronous.Client):
         **_BASE_RESPONSE,
     }
     url = _construct_url(
-        "https://openexchangerates.org/api/historical.json",
+        "https://openexchangerates.org/api/historical/2021-01-01.json",
         {
             "app_id": "app_id",
             "base": "USD",
-            "date": "2021-01-01",
             "show_alternative": "false",
             "symbols": "EUR,JPY",
         },

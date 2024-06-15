@@ -16,11 +16,12 @@ class Client(BaseClient):
     def _get(
         self,
         endpoint: Endpoint,
-        params: dict[str, Any],
+        query_params: dict[str, Any],
+        path_params: list[str] | None = None,
     ) -> dict[str, Any]:
         """Make a GET request to the API."""
-        url = f"{self._base_url}/{endpoint}.json"
-        response = requests.get(url, params={**params, "app_id": self._app_id})
+        url = self._prepare_url(endpoint, path_params)
+        response = requests.get(url, params={"app_id": self._app_id, **query_params})
         try:
             response.raise_for_status()
         except requests.HTTPError as error:
@@ -28,9 +29,13 @@ class Client(BaseClient):
             exc = _exceptions.get(response.status_code, msg)
             if exc is not None:
                 raise exc from error
-            raise exceptions.Error from error
+            raise exceptions.Error(error) from error
 
         return response.json()
+
+    def currencies(self) -> responses.Currencies:
+        """Get a list of available currencies."""
+        return cast(responses.Currencies, self._get("currencies", {}))
 
     def latest(
         self,
@@ -69,12 +74,14 @@ class Client(BaseClient):
         """
         params = {
             "base": base or self._base,
-            "date": date.isoformat(),
             "show_alternative": show_alternative,
         }
         if symbols is not None:
             params["symbols"] = ",".join(symbols)
-        return cast(responses.Rates, self._get("historical", params))
+        return cast(
+            responses.Rates,
+            self._get("historical", params, path_params=[date.isoformat()]),
+        )
 
     def convert(
         self,
