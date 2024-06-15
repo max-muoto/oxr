@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime as dt
 from collections.abc import Iterable
 from types import TracebackType
-from typing import Any, Optional, Type, cast
+from typing import Any, cast
 
 import aiohttp
 from typing_extensions import Self

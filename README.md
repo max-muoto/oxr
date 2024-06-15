@@ -63,6 +63,7 @@ async def main():
         # Get OHLC data asynchronously
         ohlc = await client.ohlc(start_time=dt.datetime(2020, 1, 1), period="1m", symbols=['EUR', 'JPY'])
 
+asyncio.run(main())
 ```
 
 ## License
