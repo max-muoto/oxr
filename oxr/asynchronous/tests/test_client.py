@@ -17,7 +17,7 @@ _BASE_RESPONSE = {
 
 @pytest.fixture
 def client() -> oxr.asynchronous.Client:
-    yield oxr.asynchronous.Client("app_id")
+    return oxr.asynchronous.Client("app_id")
 
 
 def _construct_url(base_url: str, params: dict[str, Any]) -> str:
