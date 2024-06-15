@@ -59,7 +59,7 @@ class BaseClient(abc.ABC):
     ) -> responses.TimeSeries | Awaitable[responses.TimeSeries]: ...
 
     @abc.abstractmethod
-    def olhc(
+    def ohlc(
         self,
         start_time: dt.datetime,
         period: Period,

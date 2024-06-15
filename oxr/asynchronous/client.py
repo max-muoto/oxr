@@ -11,12 +11,22 @@ from oxr._base import BaseClient
 from oxr._types import Currency, Endpoint, Period
 
 
+def _encode_params(params: dict[str, Any]) -> dict[str, Any]:
+    """yarl does not encode booleans as strings."""
+    return {
+        key: "true" if value is True else "false" if value is False else value
+        for key, value in params.items()
+    }
+
+
 class Client(BaseClient):
     """A asynchronous client for the Open Exchange Rates API."""
 
     async def _get(self, endpoint: Endpoint, params: dict[str, Any]) -> dict[str, Any]:
         url = f"{self._base_url}/{endpoint}.json"
-        async with aiohttp.ClientSession() as session, session.get(url, params=params) as response:
+        async with aiohttp.ClientSession() as session, session.get(
+            url, params=_encode_params({**params, "app_id": self._app_id})
+        ) as response:
             response.raise_for_status()
             return await response.json()
 
@@ -113,7 +123,7 @@ class Client(BaseClient):
             params["symbols"] = ",".join(symbols)
         return cast(responses.TimeSeries, await self._get("time-series", params))
 
-    async def olhc(
+    async def ohlc(
         self,
         start_time: dt.datetime,
         period: Period,

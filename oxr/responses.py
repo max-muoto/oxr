@@ -12,7 +12,7 @@ class _Base(TypedDict):
     license: str
 
 
-class Rates:
+class Rates(_Base):
     """The response for the latest and historical endpoints."""
 
     timestamp: int
@@ -40,7 +40,7 @@ class Conversion(_Base):
     response: float
 
 
-class TimeSeries:
+class TimeSeries(_Base):
     """The response for the time series endpoint."""
 
     start_date: str
@@ -58,7 +58,7 @@ class _OHLCRates(TypedDict):
 
 
 class OHLC(_Base):
-    """The response for the olhc endpoint."""
+    """The response for the ohlc endpoint."""
 
     start_time: str
     end_time: str

@@ -30,7 +30,7 @@ converted = client.convert(amount, 'USD', 'EUR')
 timeseries = client.timeseries(start_date=dt.date(2020, 1, 1), end_date=dt.date(2020, 1, 31), symbols=['EUR', 'JPY'])
 
 # Get open, high, low, close data
-olhc = client.olhc(start_time=dt.datetime(2020, 1, 1), period="1m", symbols=['EUR', 'JPY'])
+ohlc = client.ohlc(start_time=dt.datetime(2020, 1, 1), period="1m", symbols=['EUR', 'JPY'])
 ```
 
 ## License

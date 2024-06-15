@@ -121,7 +121,7 @@ class Client(BaseClient):
             params["symbols"] = ",".join(symbols)
         return cast(responses.TimeSeries, self._get("time-series", params))
 
-    def olhc(
+    def ohlc(
         self,
         start_time: dt.datetime,
         period: Period,
