@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import time
 from typing import Any, Iterable, cast
 
 import requests
@@ -21,7 +22,11 @@ class Client(BaseClient):
     ) -> dict[str, Any]:
         """Make a GET request to the API."""
         url = self._prepare_url(endpoint, path_params)
-        response = requests.get(url, params={"app_id": self._app_id, **query_params})
+        response = requests.get(
+            url,
+            params={"app_id": self._app_id, **query_params},
+            timeout=self._timeout,
+        )
         try:
             response.raise_for_status()
         except requests.HTTPError as error:
@@ -29,7 +34,7 @@ class Client(BaseClient):
             exc = _exceptions.get(response.status_code, msg)
             if exc is not None:
                 raise exc from error
-            raise exceptions.Error(error) from error
+            raise exceptions.Error(error) from None
 
         return response.json()
 

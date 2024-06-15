@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import datetime as dt
 from collections.abc import Iterable
-from typing import Any, cast
+from types import TracebackType
+from typing import Any, Optional, Type, cast
 
 import aiohttp
+from typing_extensions import Self
 
 from oxr import responses
 from oxr._base import BaseClient
@@ -22,6 +24,8 @@ def _encode_params(params: dict[str, Any]) -> dict[str, Any]:
 class Client(BaseClient):
     """A asynchronous client for the Open Exchange Rates API."""
 
+    _session: aiohttp.ClientSession | None = None
+
     async def _get(
         self,
         endpoint: Endpoint,
@@ -29,12 +33,19 @@ class Client(BaseClient):
         path_params: list[str] | None = None,
     ) -> dict[str, Any]:
         url = self._prepare_url(endpoint, path_params)
-        async with aiohttp.ClientSession() as session, session.get(
+        session = self._get_session()
+        async with session.get(
             url,
             params=_encode_params({"app_id": self._app_id, **query_params}),
         ) as response:
             response.raise_for_status()
             return await response.json()
+
+    def _get_session(self) -> aiohttp.ClientSession:
+        if self._session is None:
+            timeout = aiohttp.ClientTimeout(total=self._timeout)
+            self._session = aiohttp.ClientSession(timeout=timeout)
+        return self._session
 
     async def currencies(self) -> responses.Currencies:
         """Get a list of available currencies."""
@@ -128,3 +139,23 @@ class Client(BaseClient):
     async def usage(self) -> dict[str, Any]:
         """Get the usage statistics for the API key."""
         return await self._get("usage", {})
+
+    async def __aenter__(self) -> Self:
+        """Entire client session."""
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
+    ) -> None:
+        """Exit client session."""
+        if self._session is not None:
+            return await self.close()
+
+    async def close(self) -> None:
+        """Close the client session."""
+        if self._session is not None:
+            await self._session.close()
+            self._session = None

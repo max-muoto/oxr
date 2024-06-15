@@ -18,7 +18,7 @@ class BaseClient(abc.ABC):
         *,
         base: Currency = "USD",
         base_url: str = _BASE_URL,
-        timeout: float = 10,
+        timeout: float = 5,
     ) -> None:
         """Initialize the client.
 
