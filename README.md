@@ -1,6 +1,6 @@
 # oxr
 
-`oxr` is a thin-wrapper over the [Open Exchange Rates API](https://openexchangerates.org/). It provides a type-safe interface to the API, allowing you to easily fetch exchange rates and convert between currencies.
+`oxr` is a type-safe Python client with synchronous and asynchronous support for the [Open Exchange Rates API](https://openexchangerates.org/). Allowing you to easily fetch exchange rates and convert between currencies.
 
 
 ## Installation
