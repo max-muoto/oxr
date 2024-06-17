@@ -50,7 +50,7 @@ import asyncio
 import datetime as dt
 
 async def main():
-    with oxr.asynchronous.Client(app_id='your_app_id') as client:        
+    async with oxr.asynchronous.Client(app_id='your_app_id') as client:        
         # Fetch the latest exchange rates asynchronously
         rates = await client.latest(symbols=['EUR', 'JPY'])
 
