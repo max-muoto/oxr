@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import datetime as dt
 import os
-import oxr.exceptions
+
 import pytest
 
 import oxr.asynchronous
+import oxr.exceptions
 
 
 @pytest.fixture
