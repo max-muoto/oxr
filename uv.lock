@@ -633,7 +633,7 @@ dev = [
     { name = "pyright", specifier = "~=1.1.364" },
     { name = "pytest", specifier = ">=8.1.1,<9" },
     { name = "pytest-asyncio", specifier = "~=0.23.7" },
-    { name = "pytest-cov", specifier = ">=6.0.0" },
+    { name = "pytest-cov", specifier = ">=6.0.0,<7" },
     { name = "python-dotenv", specifier = "~=1.0.1" },
     { name = "responses", specifier = "~=0.25.3" },
     { name = "ruff", specifier = "~=0.4.5" },

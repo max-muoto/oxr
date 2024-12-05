@@ -41,6 +41,13 @@ format:  ## Run code formatting
 test:  ## Run tests
 	uv run pytest
 
+.PHONY: test-cov
+test-cov:  ## Run tests and generate coverage report
+	uv run pytest --cov --cov-report=html
+
+.PHONY: open-cov
+open-cov:  ## Open the coverage report in the browser
+	uv run python -m webbrowser "file://$$(pwd)/htmlcov/index.html"
 
 .PHONY: repl
 repl:  ## Run a repl
