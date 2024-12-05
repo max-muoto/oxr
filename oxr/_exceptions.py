@@ -8,9 +8,11 @@ from oxr.exceptions import (
     InvalidCurrency,
     InvalidDate,
     InvalidDateRange,
+    NoAccessError,
 )
 
 _EXCEPTION_MAPPING: Final[dict[tuple[int, str], type[Error]]] = {
+    (403, "not_allowed"): NoAccessError,
     (401, "invalid_app_id"): InvalidAppID,
     (400, "invalid_currency"): InvalidCurrency,
     (400, "invalid_date"): InvalidDate,

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import datetime as dt
 import os
-
+import oxr.exceptions
 import pytest
 
 import oxr.asynchronous
@@ -62,3 +62,21 @@ async def test_usage(client: oxr.asynchronous.Client) -> None:
     assert "plan" in resp["data"]
     assert "usage" in resp["data"]
     assert "daily_average" in resp["data"]["usage"]
+
+
+@pytest.mark.asyncio
+async def test_session_static(client: oxr.asynchronous.Client) -> None:
+    async with client as async_client:
+        session = async_client._session  # type: ignore
+        assert session is None
+        await async_client.usage()
+        session = async_client._session  # type: ignore
+        await async_client.currencies()
+        assert async_client._session is session  # type: ignore
+
+
+@pytest.mark.asyncio
+async def test_no_access(client: oxr.asynchronous.Client):
+    """Test that we properly re-raise 403 errors as `NoAccessError`."""
+    with pytest.raises(oxr.exceptions.NoAccessError):
+        await client.ohlc(dt.datetime(2021, 1, 1), "1d", symbols=["USD"])

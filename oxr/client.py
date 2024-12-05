@@ -33,7 +33,7 @@ class Client(BaseClient):
             exc = _exceptions.get(response.status_code, msg)
             if exc is not None:
                 raise exc from error
-            raise exceptions.Error(error) from None
+            raise exceptions.Error(error) from None  # pragma: no cover
 
         return response.json()
 

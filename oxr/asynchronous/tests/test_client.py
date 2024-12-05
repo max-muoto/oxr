@@ -140,11 +140,12 @@ async def test_ohlc(client: oxr.asynchronous.Client):
             "show_alternative": "false",
             "period": "1d",
             "start_time": "2021-01-01T00:00:00",
+            "symbols": "USD",
         },
     )
     with aioresponses() as m:
         m.get(url, payload=resp)  # type: ignore
-        response = await client.ohlc(dt.datetime(2021, 1, 1), "1d")
+        response = await client.ohlc(dt.datetime(2021, 1, 1), "1d", symbols=["USD"])
         assert response["base"] == "USD"
         assert response["start_time"] == "2021-01-01T00:00:00"
         assert response["rates"] == {

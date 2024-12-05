@@ -147,11 +147,12 @@ def test_ohlc(client: oxr.Client) -> None:
                     "show_alternative": False,
                     "period": "1d",
                     "start_time": "2021-01-01T00:00:00",
+                    "symbols": "USD",
                 }
             )
         ],
     )
-    resp = client.ohlc(dt.datetime(2021, 1, 1), "1d")
+    resp = client.ohlc(dt.datetime(2021, 1, 1), "1d", symbols=["USD"])
     assert resp["base"] == "USD"
     assert resp["start_time"] == "2021-01-01T00:00:00"
     assert resp["rates"] == {

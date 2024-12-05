@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import datetime as dt
 from collections.abc import Iterable
 from types import TracebackType
@@ -8,7 +9,7 @@ from typing import Any, cast
 import aiohttp
 from typing_extensions import Self
 
-from oxr import responses
+from oxr import _exceptions, exceptions, responses
 from oxr._base import BaseClient
 from oxr._types import Currency, Endpoint, Period
 
@@ -21,7 +22,7 @@ def _encode_params(params: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-class Client(BaseClient):
+class Client(BaseClient, contextlib.AbstractAsyncContextManager["Client"]):
     """A asynchronous client for the Open Exchange Rates API."""
 
     _session: aiohttp.ClientSession | None = None
@@ -38,8 +39,17 @@ class Client(BaseClient):
             url,
             params=_encode_params({"app_id": self._app_id, **query_params}),
         ) as response:
-            response.raise_for_status()
-            return await response.json()
+            resp_json = await response.json()
+            try:
+                response.raise_for_status()
+            except aiohttp.ClientResponseError as error:
+                msg = resp_json.get("message", "")
+                print("Error message is", msg)
+                exc = _exceptions.get(error.status, msg)
+                if exc is not None:
+                    raise exc from error
+                raise exceptions.Error(error) from None  # pragma: no cover
+            return resp_json
 
     def _get_session(self) -> aiohttp.ClientSession:
         if self._session is None:
