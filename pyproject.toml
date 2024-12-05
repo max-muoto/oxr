@@ -2,17 +2,8 @@
 name = "openexchangerates"
 version = "0.1.0"
 description = "Type-safe client for the openexchangerates API."
-<<<<<<< Updated upstream
-authors = [{ name = "Maxwell Muoto", email = "maxmuoto@gmail.com" }]
-=======
-<<<<<<< Updated upstream
-authors = ["Maxwell Muoto <maxmuoto@gmail.com>"]
->>>>>>> Stashed changes
-license = "MIT"
-=======
 authors = [{ name = "Maxwell Muoto", email = "maxmuoto@gmail.com" }]
 license = { file = "LICENSE" }
->>>>>>> Stashed changes
 readme = "README.md"
 dependencies = ["requests>=2.32.3,<3", "typing-extensions>=4.12.2,<5"]
 requires-python = ">=3.9"
