@@ -1,36 +1,30 @@
-[tool.poetry]
+[project]
 name = "openexchangerates"
 version = "0.1.0"
 description = "Type-safe client for the openexchangerates API."
-authors = ["Maxwell Muoto <maxmuoto@gmail.com>"]
+authors = [{ name = "Maxwell Muoto", email = "maxmuoto@gmail.com" }]
 license = "MIT"
 readme = "README.md"
-include = ["oxr/py.typed"]
+dependencies = ["requests>=2.32.3,<3", "typing-extensions>=4.12.2,<5"]
+requires-python = ">=3.9"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-typing-extensions = "^4.12.2"
-requests = "^2.32.3"
 
-[tool.poetry.group.dev.dependencies]
-pyright = "^1.1.364"
-ruff = "^0.4.5"
-pytest = "^8.2.1"
-responses = "^0.25.3"
-aioresponses = "^0.7.6"
-pytest-asyncio = "^0.23.7"
-python-dotenv = "^1.0.1"
-ipdb = "^0.13.13"
+[dependency-groups]
+dev = [
+    "pytest >=8.1.1,<9",
+    "pyright ~=1.1.364",
+    "ruff ~=0.4.5",
+    "responses~=0.25.3",
+    "aioresponses~=0.7.6",
+    "pytest-asyncio~=0.23.7",
+    "python-dotenv~=1.0.1",
+    "ipdb~=0.13.13",
+]
+async = ["aiohttp~=3.9.5"]
 
-[tool.poetry.group.async.dependencies]
-aiohttp = "^3.9.5"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 100
 lint.extend-select = ["I"]
 
@@ -42,7 +36,7 @@ required-imports = ["from __future__ import annotations"]
 
 
 [tool.pyright]
-include = ["keychain_access", "typings"]
+include = ["oxr"]
 exclude = [
     "**/node_modules",
     "**/__pycache__",
@@ -50,5 +44,5 @@ exclude = [
     "src/typestubs",
     "**/venv",
 ]
-pythonVersion = "3.8"
+pythonVersion = "3.9"
 typeCheckingMode = "strict"

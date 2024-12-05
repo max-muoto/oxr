@@ -344,3 +344,6 @@ poetry.toml
 
 # Ignore PyCharm idea folder
 .idea
+
+# TODO
+todo.md
