@@ -31,3 +31,9 @@ class InvalidAppID(Error):
     """Raised when an invalid App ID is provided."""
 
     code = 401
+
+
+class NoAccessError(Error):
+    """Raised when the App ID does not have access to the requested resource or endpoint."""
+
+    code = 403

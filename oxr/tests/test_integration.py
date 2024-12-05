@@ -8,6 +8,7 @@ import os
 import pytest
 
 import oxr
+import oxr.exceptions
 
 
 @pytest.fixture
@@ -58,3 +59,8 @@ def test_usage(client: oxr.Client) -> None:
     assert "plan" in resp["data"]
     assert "usage" in resp["data"]
     assert "daily_average" in resp["data"]["usage"]
+
+
+def test_no_access(client: oxr.Client) -> None:
+    with pytest.raises(oxr.exceptions.NoAccessError):
+        client.ohlc(dt.datetime(2021, 1, 1), "1d", symbols=["USD"])
