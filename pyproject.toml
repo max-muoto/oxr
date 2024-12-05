@@ -8,10 +8,31 @@ readme = "README.md"
 dependencies = ["requests>=2.32.3,<3", "typing-extensions>=4.12.2,<5"]
 requires-python = ">=3.9"
 
+[tool.coverage.run]
+branch = true
+source = ["oxr"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "pass",
+    "pytest.mark.skip",
+    "@(typing\\.)?overload",
+    "if TYPE_CHECKING:",
+    "if typing.TYPE_CHECKING:",
+    "class .*\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+show_missing = true
+fail_under = 100
+omit = ["oxr/tests/*"]
 
 [dependency-groups]
 dev = [
     "pytest >=8.1.1,<9",
+    "pytest-cov>=6.0.0,<7",
     "pyright ~=1.1.364",
     "ruff ~=0.4.5",
     "responses~=0.25.3",

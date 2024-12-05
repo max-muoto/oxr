@@ -28,7 +28,7 @@ jobs:
         run: uv sync --all-groups
 
       - name: Run tests
-        run: uv run pytest
+        run: uv run pytest --rootdir=oxr --cov --cov-report=''
 
       - name: Run ruff
         run: |
