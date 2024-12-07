@@ -24,6 +24,8 @@ conversion = client.convert("USD", "EUR", 100)
 ```
 """
 
-from openexchangerates.core import Client
+from __future__ import annotations
+
+from oxr.client import Client
 
 __all__ = ["Client"]
