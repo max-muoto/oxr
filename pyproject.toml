@@ -16,7 +16,6 @@ build-backend = "hatchling.build"
 [project.optional-dependencies]
 async = ["aiohttp>=3.9.5,<4"]
 
-
 [tool.coverage.run]
 source = ["oxr"]
 
