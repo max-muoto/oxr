@@ -1,5 +1,5 @@
 [project]
-name = "openexchangerates"
+name = "oxr"
 version = "0.1.0"
 description = "Type-safe client for the openexchangerates API."
 authors = [{ name = "Maxwell Muoto", email = "maxmuoto@gmail.com" }]
