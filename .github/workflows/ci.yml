@@ -46,8 +46,6 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
-    workflow_dispatch:
-
     steps:
       - uses: actions/checkout@v4
 
@@ -57,6 +55,6 @@ jobs:
       - name: Build and publish to PyPi
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          uv build
-          uv publish
+          run: |
+            uv build
+            uv publish
