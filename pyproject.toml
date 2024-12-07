@@ -8,6 +8,26 @@ readme = "README.md"
 dependencies = ["requests>=2.32.3,<3", "typing-extensions>=4.12.2,<5"]
 requires-python = ">=3.9"
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+packages = ["oxr"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["oxr"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"oxr/py.typed" = "oxr/py.typed"
+
+[tool.hatch.envs.async]
+dependencies = ["aiohttp>=3.9.5,<4.0.0"]
+
+[tool.hatch.build.targets.wheel.async]
+name = "oxr-async"
+dependencies = ["aiohttp>=3.9.5,<4.0.0"]
+
 [tool.coverage.run]
 source = ["oxr"]
 
