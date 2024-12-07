@@ -1,6 +1,7 @@
 name: Core
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -44,6 +45,8 @@ jobs:
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    workflow_dispatch:
 
     steps:
       - uses: actions/checkout@v4
