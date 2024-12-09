@@ -1,6 +1,6 @@
 # oxr
 
-`oxr` is a type-safe Python client with synchronous and asynchronous support for the [Open Exchange Rates API](https://openexchangerates.org/). Allowing you to easily fetch exchange rates and convert between currencies.
+`oxr` is a type-safe Python client built on Pydantic with synchronous and asynchronous support for the [Open Exchange Rates API](https://openexchangerates.org/). Allowing you to easily fetch exchange rates and convert between currencies.
 
 
 ## Installation
@@ -42,7 +42,7 @@ ohlc = client.ohlc(start_time=dt.datetime(2020, 1, 1), period="1m", symbols=['EU
 
 ### Asynchronous Client
 
-The asynchronous client is built on top of `aiohttp`, and can be used in an `async` context.
+The asynchronous client is built on top of `aiohttp` and can be used with an `async` context manager.
 
 ```python
 import oxr.asynchronous
