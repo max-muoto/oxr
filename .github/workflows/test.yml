@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         env:
           OXR_APP_ID: ${{ secrets.OXR_APP_ID }}
-        run: uv run pytest --rootdir=oxr --cov --cov-report=''
+        run: uv run --python ${{ matrix.python-version }} pytest --rootdir=oxr --cov --cov-report=''
 
       - name: Run ruff
         run: |
